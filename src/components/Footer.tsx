@@ -1,37 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const footerLinks = {
-  Services: [
-    { name: "Physical Presence", href: "#services" },
-    { name: "Corporate Setup", href: "#services" },
-    { name: "Grant AI", href: "#grant-ai" },
-    { name: "Investor Network", href: "#services" },
-  ],
-  Company: [
-    { name: "About ISSA", href: "#" },
-    { name: "Our Partners", href: "#partners" },
-    { name: "Careers", href: "#" },
-    { name: "Press Kit", href: "#" },
-  ],
-  Resources: [
-    { name: "Free Grant Tool", href: "https://www.grantsg.it/" },
-    { name: "Singapore Guide", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "FAQ", href: "#faq" },
-  ],
-  Legal: [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Cookie Policy", href: "#" },
-  ],
-};
+import Link from "next/link";
+import { useI18n } from "@/lib/i18n";
 
 const socialLinks = [
   {
     name: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/company/italysingaporestartupagency/",
     icon: (
       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -59,66 +35,116 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { t } = useI18n();
+
+  const footerLinks = {
+    [t.footer.categories.services]: [
+      { name: t.footer.links.physicalPresence, href: "#services" },
+      { name: t.footer.links.corporateSetup, href: "#services" },
+      { name: t.footer.links.grantAI, href: "#grant-ai" },
+      { name: t.footer.links.investorNetwork, href: "#services" },
+    ],
+    [t.footer.categories.company]: [
+      { name: t.footer.links.aboutISSA, href: "#partners" },
+      { name: t.footer.links.ourPartners, href: "#partners" },
+      { name: t.footer.links.contact, href: "/apply" },
+      { name: t.footer.links.faq, href: "#faq" },
+    ],
+    [t.footer.categories.resources]: [
+      { name: t.footer.links.freeGrantTool, href: "https://www.grantsg.it/" },
+      { name: t.footer.links.singaporeGuide, href: "/singapore-guide" },
+      { name: t.footer.links.blog, href: "/blog" },
+    ],
+    [t.footer.categories.legal]: [
+      { name: t.footer.links.privacyPolicy, href: "/privacy-policy" },
+      { name: t.footer.links.termsOfService, href: "/terms-of-service" },
+      { name: t.footer.links.cookiePolicy, href: "/cookie-policy" },
+    ],
+  };
+
   return (
-    <footer id="contact" className="relative pt-24 pb-12 border-t border-white/5">
+    <footer id="contact" className="relative pt-16 sm:pt-20 lg:pt-24 pb-8 sm:pb-12 border-t border-white/5">
       <div className="absolute inset-0 bg-gradient-to-t from-navy-900 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* CTA Section */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-6">
-            <span className="text-white">Ready to </span>
-            <span className="text-gradient">Expand to Asia?</span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-serif font-bold mb-4 sm:mb-6">
+            <span className="text-white">{t.footer.ctaTitle1}</span>
+            <span className="text-gradient">{t.footer.ctaTitle2}</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-lg text-gray-400 mb-8">
-            Join the Italian companies already succeeding in Singapore with ISSA.
-            Your journey to Asia starts with a single conversation.
+          <p className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-gray-400 mb-4 sm:mb-6 px-2">
+            {t.footer.ctaSubtitle}
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4" id="eligibility">
-            <motion.a
-              href="mailto:contact@issa.network"
-              className="px-8 py-4 bg-electric-500 text-white font-semibold rounded-full text-lg shadow-lg shadow-electric-500/25 animate-glow"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Start Your Journey
-            </motion.a>
+
+          {/* Pricing indicator */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 mb-6 sm:mb-8 text-xs sm:text-sm">
+            <span className="text-gray-400">
+              {t.footer.incorporationFrom} <span className="text-white font-semibold">SGD 3,500</span>
+            </span>
+            <span className="text-gray-600 hidden sm:inline">|</span>
+            <span className="text-gray-400">
+              {t.footer.grantMatchingFree} <span className="text-electric-400 font-semibold">{t.common.free}</span>
+            </span>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4" id="eligibility">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/apply"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-electric-500 text-white font-semibold rounded-full text-base sm:text-lg shadow-lg shadow-electric-500/25"
+              >
+                {t.footer.ctaPrimary}
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
             <motion.a
               href="https://www.grantsg.it/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 glass text-white font-semibold rounded-full text-lg hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 glass text-white font-semibold rounded-full text-base sm:text-lg hover:bg-white/10 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Try Free Grant Tool
+              {t.footer.ctaSecondary}
             </motion.a>
           </div>
         </motion.div>
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-16">
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              <h3 className="text-xs sm:text-sm font-semibold text-white uppercase tracking-wider mb-3 sm:mb-4">
                 {category}
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
-                    <a
-                      href={link.href}
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
-                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="text-gray-400 hover:text-white transition-colors text-sm"
-                    >
-                      {link.name}
-                    </a>
+                    {link.href.startsWith("/") ? (
+                      <Link
+                        href={link.href}
+                        className="text-gray-400 hover:text-white transition-colors text-xs sm:text-sm"
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="text-gray-400 hover:text-white transition-colors text-xs sm:text-sm"
+                      >
+                        {link.name}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -127,18 +153,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/5">
-          <div className="flex items-center gap-4 mb-4 md:mb-0">
-            <span className="text-2xl font-bold">
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-6 sm:pt-8 border-t border-white/5 gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <span className="text-xl sm:text-2xl font-bold">
               <span className="text-white">IS</span>
               <span className="text-electric-500">SA</span>
             </span>
-            <span className="text-gray-500 text-sm">
-              Italian Singapore Startup Agency
+            <span className="text-gray-500 text-xs sm:text-sm">
+              {t.footer.tagline}
             </span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             {socialLinks.map((social) => (
               <a
                 key={social.name}
@@ -152,10 +178,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="text-center mt-8 text-gray-500 text-sm">
-          <p>&copy; 2025 ISSA Network. A GSPIVSGP Initiative. All rights reserved.</p>
+        <div className="text-center mt-6 sm:mt-8 text-gray-500 text-xs sm:text-sm">
+          <p>&copy; 2025 {t.footer.copyright}</p>
           <p className="mt-2">
-            Powered by{" "}
+            {t.footer.poweredBy}{" "}
             <span className="text-gray-400">BCC Studio</span>,{" "}
             <span className="text-gray-400">Allix</span>, and{" "}
             <span className="text-gray-400">PugliAI</span>
