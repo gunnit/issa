@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ISSA - Italian Singapore Strategic Access | Your Bridge to Asia",
+  title: "ISSA - Italian Singapore Startup Agency | Your Bridge to Asia",
   description:
     "Launch your Italian startup in Singapore with ISSA. Physical presence, legal backing, AI-driven capital matching, and direct access to 500+ Asian investors. Founded by BCC Studio, Allix, and PugliAI.",
   keywords: [
@@ -14,33 +14,34 @@ export const metadata: Metadata = {
     "Asia Expansion Italian Companies",
     "Singapore VC Italian Startups",
     "ISSA Network",
+    "Italian Singapore Startup Agency",
   ],
   authors: [{ name: "ISSA Network" }],
-  creator: "ISSA - Italian Singapore Strategic Access",
+  creator: "ISSA - Italian Singapore Startup Agency",
   publisher: "GSPIVSGP Network",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://gunnit.github.io/issa",
+    url: "https://is-sa.it",
     siteName: "ISSA",
     title: "ISSA - The Italian Bridge to Singapore's Financial Future",
     description:
       "De-risk your international expansion into Asia with shared infrastructure and AI tools. Physical presence, legal backing, and AI-driven capital matching.",
     images: [
       {
-        url: "/issa/og-image.png",
+        url: "https://is-sa.it/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ISSA - Italian Singapore Strategic Access",
+        alt: "ISSA - Italian Singapore Startup Agency",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ISSA - Italian Singapore Strategic Access",
+    title: "ISSA - Italian Singapore Startup Agency",
     description:
       "Launch your Italian startup in Singapore. Physical presence, legal backing, AI-driven capital matching.",
-    images: ["/issa/og-image.png"],
+    images: ["https://is-sa.it/og-image.png"],
   },
   robots: {
     index: true,
@@ -63,11 +64,12 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    name: "ISSA - Italian Singapore Strategic Access",
+    name: "ISSA - Italian Singapore Startup Agency",
+    alternateName: "Italian Singapore Strategic Access",
     description:
       "A formal Network Contract between three established Italian tech companies providing a bridge for Italian companies entering the Singaporean financial and tech market.",
-    url: "https://gunnit.github.io/issa",
-    logo: "https://gunnit.github.io/issa/logo.png",
+    url: "https://is-sa.it",
+    logo: "https://is-sa.it/logo.png",
     areaServed: ["Italy", "Singapore", "Asia"],
     serviceType: [
       "Business Consulting",

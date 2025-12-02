@@ -91,7 +91,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <span className="inline-block px-4 py-2 mb-6 text-xs font-semibold tracking-wider text-electric-400 uppercase glass rounded-full">
-            Italian Singapore Strategic Access
+            Italian Singapore Startup Agency
           </span>
         </motion.div>
 

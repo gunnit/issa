@@ -134,7 +134,7 @@ export default function Footer() {
               <span className="text-electric-500">SA</span>
             </span>
             <span className="text-gray-500 text-sm">
-              Italian Singapore Strategic Access
+              Italian Singapore Startup Agency
             </span>
           </div>
 
