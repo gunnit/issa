@@ -129,6 +129,7 @@ interface Translations {
       contact: string;
       faq: string;
       freeGrantTool: string;
+      guides: string;
       singaporeGuide: string;
       blog: string;
       privacyPolicy: string;
@@ -449,6 +450,7 @@ const translations: Record<Language, Translations> = {
         contact: "Contact",
         faq: "FAQ",
         freeGrantTool: "Free Grant Tool",
+        guides: "Business Guides",
         singaporeGuide: "Singapore Guide",
         blog: "Blog",
         privacyPolicy: "Privacy Policy",
@@ -908,6 +910,7 @@ const translations: Record<Language, Translations> = {
         contact: "Contatti",
         faq: "FAQ",
         freeGrantTool: "Grant Tool Gratis",
+        guides: "Guide Business",
         singaporeGuide: "Guida Singapore",
         blog: "Blog",
         privacyPolicy: "Privacy Policy",

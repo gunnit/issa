@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Process from "@/components/Process";
 import BentoGrid from "@/components/BentoGrid";
 import GrantAI from "@/components/GrantAI";
+import GuidesBanner from "@/components/GuidesBanner";
 import Testimonials from "@/components/Testimonials";
 import LocalPartners from "@/components/LocalPartners";
 import Partners from "@/components/Partners";
@@ -19,6 +20,7 @@ export default function Home() {
       </section>
       <BentoGrid />
       <GrantAI />
+      <GuidesBanner />
       <Testimonials />
       <LocalPartners />
       <Partners />

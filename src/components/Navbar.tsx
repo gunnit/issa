@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useI18n } from "@/lib/i18n";
 
 export default function Navbar() {
@@ -65,9 +66,15 @@ export default function Navbar() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/" className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight">
-                <span className="text-white">IS</span>
-                <span className="text-electric-500">SA</span>
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/ISSA_FULL_LOGO.png"
+                  alt="ISSA - Italy Singapore Startup Agency"
+                  width={140}
+                  height={45}
+                  className="h-8 sm:h-10 lg:h-12 w-auto"
+                  priority
+                />
               </Link>
             </motion.div>
 

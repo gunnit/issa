@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useI18n } from "@/lib/i18n";
 
 const socialLinks = [
@@ -52,6 +53,7 @@ export default function Footer() {
     ],
     [t.footer.categories.resources]: [
       { name: t.footer.links.freeGrantTool, href: "https://www.grantsg.it/" },
+      { name: t.footer.links.guides, href: "/guides" },
       { name: t.footer.links.singaporeGuide, href: "/singapore-guide" },
       { name: t.footer.links.blog, href: "/blog" },
     ],
@@ -155,10 +157,15 @@ export default function Footer() {
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row items-center justify-between pt-6 sm:pt-8 border-t border-white/5 gap-4">
           <div className="flex items-center gap-3 sm:gap-4">
-            <span className="text-xl sm:text-2xl font-bold">
-              <span className="text-white">IS</span>
-              <span className="text-electric-500">SA</span>
-            </span>
+            <Link href="/">
+              <Image
+                src="/ISSA_ICON_LOGO.png"
+                alt="ISSA"
+                width={50}
+                height={50}
+                className="h-10 sm:h-12 w-auto"
+              />
+            </Link>
             <span className="text-gray-500 text-xs sm:text-sm">
               {t.footer.tagline}
             </span>

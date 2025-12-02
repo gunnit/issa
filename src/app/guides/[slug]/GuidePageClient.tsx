@@ -4,14 +4,75 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useI18n } from "@/lib/i18n";
+import { Guide, guides } from "@/lib/guides-data";
 import Footer from "@/components/Footer";
 
-export default function SingaporeGuidePage() {
+interface GuidePageClientProps {
+  guide: Guide | null;
+  slug: string;
+}
+
+export default function GuidePageClient({ guide, slug }: GuidePageClientProps) {
   const { t, language, setLanguage } = useI18n();
 
   const toggleLanguage = () => {
     setLanguage(language === "en" ? "it" : "en");
   };
+
+  if (!guide) {
+    return (
+      <main className="min-h-screen bg-navy-900 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-white mb-4">
+            {language === "en" ? "Guide Not Found" : "Guida Non Trovata"}
+          </h1>
+          <Link href="/guides" className="text-electric-400 hover:text-electric-300">
+            {language === "en" ? "View All Guides" : "Vedi Tutte le Guide"}
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  const title = language === "en" ? guide.title : guide.titleIt;
+  const description = language === "en" ? guide.description : guide.descriptionIt;
+  const sections = language === "en" ? guide.sections : guide.sectionsIt;
+  const category = language === "en" ? guide.category : guide.categoryIt;
+
+  const content = language === "en" ? {
+    backToGuides: "Back to Guides",
+    tableOfContents: "Table of Contents",
+    readTime: "read",
+    relatedGuides: "Related Guides",
+    viewGuide: "Read Guide",
+    ctaTitle: "Ready to Get Started?",
+    ctaSubtitle: "Let our Italian-speaking experts help you navigate Singapore's business landscape.",
+    ctaButton: "Book Free Consultation",
+    shareTitle: "Share This Guide"
+  } : {
+    backToGuides: "Torna alle Guide",
+    tableOfContents: "Indice",
+    readTime: "lettura",
+    relatedGuides: "Guide Correlate",
+    viewGuide: "Leggi Guida",
+    ctaTitle: "Pronto per Iniziare?",
+    ctaSubtitle: "Lascia che i nostri esperti italiani ti aiutino a navigare il panorama business di Singapore.",
+    ctaButton: "Prenota Consulenza Gratuita",
+    shareTitle: "Condividi Questa Guida"
+  };
+
+  // Get related guides (same category or first 3 different guides)
+  const relatedGuides = guides
+    .filter(g => g.slug !== slug)
+    .filter(g => g.category === guide.category)
+    .slice(0, 3);
+
+  if (relatedGuides.length < 3) {
+    const additionalGuides = guides
+      .filter(g => g.slug !== slug && !relatedGuides.includes(g))
+      .slice(0, 3 - relatedGuides.length);
+    relatedGuides.push(...additionalGuides);
+  }
 
   return (
     <main className="min-h-screen bg-navy-900">
@@ -40,13 +101,13 @@ export default function SingaporeGuidePage() {
                 <span className="uppercase hidden sm:inline">{language}</span>
               </motion.button>
               <Link
-                href="/"
+                href="/guides"
                 className="text-gray-300 hover:text-white transition-colors text-sm font-medium flex items-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span className="hidden sm:inline">{t.apply.backToHome}</span>
+                <span className="hidden sm:inline">{content.backToGuides}</span>
               </Link>
             </div>
           </div>
@@ -60,22 +121,34 @@ export default function SingaporeGuidePage() {
       {/* Content */}
       <div className="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
+          {/* Header */}
           <motion.div
-            className="text-center mb-12"
+            className="mb-12"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            <div className="flex items-center gap-3 mb-6">
+              <Link
+                href="/guides"
+                className="text-gray-400 hover:text-white transition-colors text-sm"
+              >
+                {language === "en" ? "Guides" : "Guide"}
+              </Link>
+              <span className="text-gray-600">/</span>
+              <span className="text-electric-400 text-sm">{category}</span>
+            </div>
+
             <span className="inline-block px-4 py-2 mb-6 text-xs font-semibold tracking-wider text-electric-400 uppercase glass rounded-full">
-              {t.singaporeGuide.badge}
+              {guide.readTime} {content.readTime}
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-6">
-              <span className="text-white">{t.singaporeGuide.title1}</span>
-              <br />
-              <span className="text-gradient">{t.singaporeGuide.title2}</span>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white mb-6">
+              {title}
             </h1>
-            <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-400">
-              {t.singaporeGuide.subtitle}
+
+            <p className="text-lg text-gray-400 leading-relaxed">
+              {description}
             </p>
           </motion.div>
 
@@ -87,10 +160,10 @@ export default function SingaporeGuidePage() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <h3 className="text-lg font-bold text-white mb-4">
-              {language === "en" ? "Table of Contents" : "Indice"}
+              {content.tableOfContents}
             </h3>
             <ul className="grid sm:grid-cols-2 gap-2">
-              {t.singaporeGuide.sections.map((section, index) => (
+              {sections.map((section, index) => (
                 <li key={index}>
                   <a
                     href={`#section-${index}`}
@@ -108,7 +181,7 @@ export default function SingaporeGuidePage() {
 
           {/* Sections */}
           <div className="space-y-8">
-            {t.singaporeGuide.sections.map((section, index) => (
+            {sections.map((section, index) => (
               <motion.div
                 key={index}
                 id={`section-${index}`}
@@ -140,23 +213,41 @@ export default function SingaporeGuidePage() {
                     ))}
                   </ul>
                 )}
+                {section.links && section.links.length > 0 && (
+                  <div className="ml-14 mt-4 flex flex-wrap gap-3">
+                    {section.links.map((link, linkIndex) => (
+                      <a
+                        key={linkIndex}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sm text-electric-400 hover:text-electric-300 transition-colors"
+                      >
+                        {link.text}
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
 
           {/* CTA Section */}
           <motion.div
-            className="mt-16 text-center"
+            className="mt-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
           >
-            <div className="glass-strong rounded-3xl p-8 sm:p-12">
+            <div className="glass-strong rounded-3xl p-8 sm:p-12 text-center">
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-4">
-                {t.singaporeGuide.ctaTitle}
+                {content.ctaTitle}
               </h2>
               <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-                {t.singaporeGuide.ctaSubtitle}
+                {content.ctaSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -164,7 +255,7 @@ export default function SingaporeGuidePage() {
                     href="/apply"
                     className="inline-flex items-center gap-2 px-8 py-4 bg-electric-500 text-white font-semibold rounded-full text-lg shadow-lg shadow-electric-500/25"
                   >
-                    {t.singaporeGuide.ctaButton}
+                    {content.ctaButton}
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -181,6 +272,43 @@ export default function SingaporeGuidePage() {
                   {t.footer.ctaSecondary}
                 </motion.a>
               </div>
+            </div>
+          </motion.div>
+
+          {/* Related Guides */}
+          <motion.div
+            className="mt-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+          >
+            <h3 className="text-2xl font-bold text-white mb-8 text-center">
+              {content.relatedGuides}
+            </h3>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {relatedGuides.map((relatedGuide) => (
+                <Link
+                  key={relatedGuide.slug}
+                  href={`/guides/${relatedGuide.slug}`}
+                  className="glass rounded-2xl p-6 hover:bg-white/5 transition-all duration-300 group"
+                >
+                  <span className="inline-block px-2 py-1 mb-3 text-xs font-medium text-electric-400 bg-electric-500/10 rounded">
+                    {language === "en" ? relatedGuide.category : relatedGuide.categoryIt}
+                  </span>
+                  <h4 className="text-white font-bold mb-2 group-hover:text-electric-400 transition-colors line-clamp-2">
+                    {language === "en" ? relatedGuide.title : relatedGuide.titleIt}
+                  </h4>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-500">{relatedGuide.readTime}</span>
+                    <span className="text-electric-400 flex items-center gap-1">
+                      {content.viewGuide}
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           </motion.div>
         </div>
