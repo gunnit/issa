@@ -107,15 +107,9 @@ export default function Navbar() {
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   href="/apply"
-                  className="relative px-5 lg:px-6 py-2 lg:py-2.5 bg-electric-500 text-white font-semibold rounded-full text-sm overflow-hidden group"
+                  className="px-5 lg:px-6 py-2 lg:py-2.5 bg-electric-500 hover:bg-electric-400 text-white font-semibold rounded-full text-sm transition-colors"
                 >
-                  <span className="relative z-10">{t.nav.getStarted}</span>
-                  <motion.div
-                    className="absolute inset-0 bg-electric-400"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  {t.nav.getStarted}
                 </Link>
               </motion.div>
             </div>
